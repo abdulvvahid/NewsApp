@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -34,6 +35,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
     }
 }
 
@@ -69,6 +73,10 @@ dependencies {
 
     // Okhttp --
     implementation "com.squareup.okhttp3:okhttp:4.9.1"
+
+    // Hilt -- https://developer.android.com/training/dependency-injection/hilt-android
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 
     // MockWebServer -- https://github.com/square/okhttp/tree/master/mockwebserver
     testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
