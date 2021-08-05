@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -48,6 +49,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     def lifecycle_version = "2.4.0-alpha03"
 
@@ -77,6 +79,10 @@ dependencies {
     // Hilt -- https://developer.android.com/training/dependency-injection/hilt-android
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+    // Navigation -- https://developer.android.com/jetpack/androidx/releases/navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 
     // MockWebServer -- https://github.com/square/okhttp/tree/master/mockwebserver
     testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
