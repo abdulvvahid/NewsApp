@@ -76,6 +76,10 @@ dependencies {
     // Okhttp --
     implementation "com.squareup.okhttp3:okhttp:4.9.1"
 
+    // Glide -- https://github.com/bumptech/glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+
     // Hilt -- https://developer.android.com/training/dependency-injection/hilt-android
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
