@@ -2,15 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".InfoFragment">
+        tools:context=".InfoFragment"
+        android:orientation="vertical">
 
-        <TextView
+        <WebView
+            android:id="@+id/wv_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Info Fragment" />
+            android:layout_height="match_parent" />
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>

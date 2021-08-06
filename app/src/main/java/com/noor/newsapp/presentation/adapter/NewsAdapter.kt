@@ -9,9 +9,7 @@ import com.bumptech.glide.Glide
 import com.noor.newsapp.data.model.Article
 import com.noor.newsapp.databinding.NewsListItemBinding
 
-class NewsAdapter(
-
-) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>(){
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -50,7 +48,19 @@ class NewsAdapter(
             Glide.with(binding.tvArticleImage.context)
                 .load(article.urlToImage)
                 .into(binding.tvArticleImage)
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.let {
+                    it(article)
+                }
+            }
         }
+    }
+
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
     }
 
 }
