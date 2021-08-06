@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.noor.newsapp.databinding.ActivityMainBinding
+import com.noor.newsapp.presentation.adapter.NewsAdapter
 import com.noor.newsapp.presentation.viewModel.NewsViewModel
 import com.noor.newsapp.presentation.viewModel.NewsViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NewsViewModel
     @Inject
     lateinit var factory: NewsViewModelFactory
+    @Inject
+    lateinit var newsAdapter: NewsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

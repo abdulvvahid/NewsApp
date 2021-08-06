@@ -33,6 +33,7 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
+        newsAdapter = (activity as MainActivity).newsAdapter
         initRecyclerView()
         viewNewsList()
     }
@@ -40,7 +41,7 @@ class NewsFragment : Fragment() {
     private fun viewNewsList() {
         viewModel.getNewsHeadLines(country, page)
         viewModel.newsHeadLines.observe(viewLifecycleOwner, { response ->
-            when(response){
+            when (response) {
                 is com.noor.newsapp.data.util.Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
@@ -61,17 +62,18 @@ class NewsFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        newsAdapter = NewsAdapter()
+        // newsAdapter = NewsAdapter()
         binding.rvNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
-    private fun hideProgressBar(){
+
+    private fun hideProgressBar() {
         binding.progressBar.visibility = View.INVISIBLE
     }
 
