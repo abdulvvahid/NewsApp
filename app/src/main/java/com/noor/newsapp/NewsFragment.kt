@@ -88,7 +88,6 @@ class NewsFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        // newsAdapter = NewsAdapter()
         binding.rvNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
