@@ -7,7 +7,7 @@ import com.noor.newsapp.domain.repository.NewsRepository
 class GetSearchedNewsUseCase(
     private val newsRepository: NewsRepository
 ) {
-    suspend fun execute(searchQuery: String): Resource<APIResponse> {
-        return newsRepository.getSearchedNews(searchQuery)
+    suspend fun execute(country: String, searchQuery: String, page: Int): Resource<APIResponse> {
+        return newsRepository.getSearchedNews(country, searchQuery, page)
     }
 }

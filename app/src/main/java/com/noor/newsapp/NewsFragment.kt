@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,9 @@ import com.bumptech.glide.load.engine.Resource
 import com.noor.newsapp.databinding.FragmentNewsBinding
 import com.noor.newsapp.presentation.adapter.NewsAdapter
 import com.noor.newsapp.presentation.viewModel.NewsViewModel
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class NewsFragment : Fragment() {
 
@@ -33,7 +37,6 @@ class NewsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentNewsBinding.inflate(layoutInflater, container, false)
-        activity?.title = "Haberler"
         return binding.root
     }
 
@@ -52,6 +55,7 @@ class NewsFragment : Fragment() {
         }
         initRecyclerView()
         viewNewsList()
+        setSearchView()
     }
 
     private fun viewNewsList() {
@@ -62,9 +66,9 @@ class NewsFragment : Fragment() {
                     hideProgressBar()
                     response.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
-                        if(it.totalResults % 20 == 0){
+                        if (it.totalResults % 20 == 0) {
                             pages = it.totalResults / 20
-                        }else {
+                        } else {
                             pages = it.totalResults / 20 + 1
                         }
                         isLastPage = page == pages
@@ -106,7 +110,7 @@ class NewsFragment : Fragment() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
-            if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                 isScrolling = true
             }
         }
@@ -119,14 +123,75 @@ class NewsFragment : Fragment() {
             val topPosition = layoutManager.findFirstCompletelyVisibleItemPosition()
 
             val hasReachedToEnd = topPosition + visibleItems >= sizeOfTheCurrentList
-            val shouldPaginate = isLoading.not() && isLastPage.not() && hasReachedToEnd && isScrolling
-            if(shouldPaginate) {
+            val shouldPaginate =
+                isLoading.not() && isLastPage.not() && hasReachedToEnd && isScrolling
+            if (shouldPaginate) {
                 page++
                 viewModel.getNewsHeadLines(country, page)
                 isScrolling = false
             }
 
         }
+    }
+
+    // Search
+    
+    private fun setSearchView(){
+        binding.svNews.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                viewModel.searchNews("tr",p0.toString(),1)
+                viewSearchedNews()
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                MainScope().launch {
+                    delay(2000)
+                    viewModel.searchNews("tr",p0.toString(),1)
+                    viewSearchedNews()
+                }
+                return false
+            }
+
+        })
+
+        binding.svNews.setOnCloseListener(object :SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                initRecyclerView()
+                viewNewsList()
+                return false
+            }
+
+        })
+    }
+    
+    fun viewSearchedNews() {
+        viewModel.searchedNews.observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is com.noor.newsapp.data.util.Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let {
+                        newsAdapter.differ.submitList(it.articles.toList())
+                        if (it.totalResults % 20 == 0) {
+                            pages = it.totalResults / 20
+                        } else {
+                            pages = it.totalResults / 20 + 1
+                        }
+                        isLastPage = page == pages
+                    }
+                }
+                is com.noor.newsapp.data.util.Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let {
+                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_LONG).show()
+                    }
+                }
+                is com.noor.newsapp.data.util.Resource.Loading -> {
+                    showProgressBar()
+                }
+            }
+        })
+
     }
 
 }
