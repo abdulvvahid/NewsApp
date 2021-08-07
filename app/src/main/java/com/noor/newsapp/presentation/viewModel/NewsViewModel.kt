@@ -103,4 +103,8 @@ class NewsViewModel(
         }
     }
 
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        deleteSavedNewsUseCase.execute(article)
+    }
+
 }

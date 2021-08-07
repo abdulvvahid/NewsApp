@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noor.newsapp.databinding.FragmentSavedBinding
 import com.noor.newsapp.presentation.adapter.NewsAdapter
@@ -46,6 +48,37 @@ class SavedFragment : Fragment() {
         viewModel.getSavedNews().observe(viewLifecycleOwner,{
             newsAdapter.differ.submitList(it)
         })
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val article = newsAdapter.differ.currentList[position]
+                viewModel.deleteArticle(article)
+                Snackbar.make(view, "Deleted Successfully", Snackbar.LENGTH_LONG)
+                    .apply {
+                        setAction("Undo"){
+                            viewModel.saveArticle(article)
+                        }
+                        show()
+                    }
+            }
+
+        }
+        ItemTouchHelper(itemTouchHelperCallback).apply {
+            attachToRecyclerView(binding.rvSaved)
+        }
+
     }
 
     private fun initRecyclerView() {
