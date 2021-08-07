@@ -1,4 +1,4 @@
-package com.noor.newsapp
+package com.noor.newsapp.presentation.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -27,7 +27,7 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args: InfoFragmentArgs by navArgs()
+        val args: com.noor.newsapp.presentation.view.InfoFragmentArgs by navArgs()
         val article = args.selectedArticle
         binding.wvInfo.apply {
             webViewClient = WebViewClient()

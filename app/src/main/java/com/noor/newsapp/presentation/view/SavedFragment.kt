@@ -1,17 +1,16 @@
-package com.noor.newsapp
+package com.noor.newsapp.presentation.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.noor.newsapp.R
 import com.noor.newsapp.databinding.FragmentSavedBinding
 import com.noor.newsapp.presentation.adapter.NewsAdapter
 import com.noor.newsapp.presentation.viewModel.NewsViewModel

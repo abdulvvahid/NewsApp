@@ -1,11 +1,11 @@
-package com.noor.newsapp
+package com.noor.newsapp.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.noor.newsapp.R
 import com.noor.newsapp.databinding.ActivityMainBinding
 import com.noor.newsapp.presentation.adapter.NewsAdapter
 import com.noor.newsapp.presentation.viewModel.NewsViewModel

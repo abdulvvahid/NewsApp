@@ -5,7 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SavedFragment">
+        tools:context=".presentation.view.SavedFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_saved"

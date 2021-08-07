@@ -1,4 +1,4 @@
-package com.noor.newsapp
+package com.noor.newsapp.presentation.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.engine.Resource
+import com.noor.newsapp.R
 import com.noor.newsapp.databinding.FragmentNewsBinding
 import com.noor.newsapp.presentation.adapter.NewsAdapter
 import com.noor.newsapp.presentation.viewModel.NewsViewModel
