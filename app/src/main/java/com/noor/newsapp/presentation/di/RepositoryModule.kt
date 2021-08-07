@@ -1,6 +1,7 @@
 package com.noor.newsapp.presentation.di
 
 import com.noor.newsapp.data.repository.NewsRepositoryImpl
+import com.noor.newsapp.data.repository.datasource.NewsLocalDataSource
 import com.noor.newsapp.data.repository.datasource.NewsRemoteDataSource
 import com.noor.newsapp.domain.repository.NewsRepository
 import dagger.Module
@@ -16,9 +17,13 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideNewsRepository(
-        newsRemoteDataSource: NewsRemoteDataSource
+        newsRemoteDataSource: NewsRemoteDataSource,
+        newsLocalDataSource: NewsLocalDataSource
     ): NewsRepository {
-        return  NewsRepositoryImpl(newsRemoteDataSource)
+        return NewsRepositoryImpl(
+            newsRemoteDataSource,
+            newsLocalDataSource
+        )
     }
 
 }
